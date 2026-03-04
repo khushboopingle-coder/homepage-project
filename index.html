@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baskin Robbins - Web Recreation</title>
+    <style>
+        :root {
+            --soft-pink: #fce4ec;
+            --header-pink: #bc858e;
+            --text-brown: #6d4c41;
+            --card-pink: #d1a1a9;
+            --dark-pink: #a6737c;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--soft-pink);
+            color: var(--text-brown);
+        }
+
+        .top-section {
+            background-image: linear-gradient(rgba(252, 228, 236, 0.85), rgba(252, 228, 236, 0.85)), 
+                              url('78a7e81789adeae46e8043537fba2b3a.jpg');
+            background-size: cover;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+        }
+
+        .logo img { 
+            height: 85px; 
+            width: 85px;
+            object-fit: contain;
+        }
+
+        /* NAVIGATION BAR WITH BORDER */
+        nav {
+            background-color: var(--header-pink);
+            padding: 10px 25px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.5); /* Requested Border */
+            position: relative;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* HAMBURGER MENU STYLES */
+        .menu-container {
+            display: flex;
+            align-items: center;
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            padding-left: 15px;
+            margin-left: 5px;
+        }
+
+        #menu-toggle {
+            display: none;
+        }
+
+        .hamburger-icon {
+            cursor: pointer;
+            color: white;
+            font-size: 22px;
+            user-select: none;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 0;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .dropdown-menu a {
+            color: var(--text-brown);
+            padding: 12px 20px;
+            display: block;
+            text-transform: capitalize;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 14px;
+        }
+
+        .dropdown-menu a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: var(--soft-pink);
+            opacity: 1;
+        }
+
+        #menu-toggle:checked ~ .dropdown-menu {
+            display: block;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            padding: 20px 8% 60px;
+            gap: 40px;
+        }
+
+        .hero-content { flex: 1.2; }
+        .hero-content h1 { font-size: 2.8rem; margin-bottom: 10px; }
+        .hero-content p { font-size: 1.1rem; max-width: 500px; margin-bottom: 25px; }
+
+        .hero-img { flex: 1; text-align: right; }
+        .hero-img img { 
+            width: 320px; 
+            height: 320px; 
+            object-fit: cover;
+            border-radius: 50%; 
+            border: 8px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* CLICKABLE ORDER BUTTON */
+        .order-btn {
+            background-color: var(--header-pink);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .order-btn:active {
+            transform: scale(0.95);
+        }
+
+        .section-title {
+            text-align: center;
+            text-transform: uppercase;
+            margin: 50px 0 30px;
+            font-weight: bold;
+        }
+
+        .category-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 0 8%;
+        }
+
+        .cat-card { 
+            text-align: center;
+            background: rgba(255, 255, 255, 0.3);
+            padding-bottom: 20px;
+            border-radius: 25px;
+        }
+        
+        .cat-card img { 
+            width: 100%; 
+            max-width: 220px;
+            height: 220px;
+            object-fit: cover; 
+            border-radius: 25px; 
+            margin-top: 10px;
+        }
+
+        .price-tag {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 10px 0;
+            color: var(--text-brown);
+        }
+
+        .buy-btn {
+            background-color: var(--card-pink);
+            color: white;
+            padding: 10px 25px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-transform: uppercase;
+            font-size: 12px;
+        }
+
+        .buy-btn:hover {
+            background-color: var(--dark-pink);
+        }
+
+        /* UPDATED OFFERS SECTION WITH 60% IMAGE OPACITY */
+        .offers-section {
+            margin: 60px 8%;
+            display: flex;
+            gap: 20px;
+        }
+
+        .offer-card {
+            flex: 1;
+            padding: 50px 20px;
+            border: 2px dashed var(--header-pink);
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            background: rgba(255, 255, 255, 0.4); /* Base color */
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        /* Pseudo-element for background image to control opacity independently */
+        .offer-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url('78a7e81789adeae46e8043537fba2b3a.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.6; /* 60% Opacity as requested */
+            z-index: -1;
+        }
+
+        footer {
+            background-image: linear-gradient(rgba(216, 180, 188, 0.9), rgba(216, 180, 188, 0.9)), 
+                              url('78a7e81789adeae46e8043537fba2b3a.jpg');
+            background-size: cover;
+            padding: 50px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 120px 120px 0 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-section">
+        <header>
+            <div class="logo"><img src="BR.png" alt="BR"></div>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">Flavours</a>
+                <a href="#">About Us</a>
+                <a href="#">Store</a>
+                <a href="#">Contact</a>
+                <a href="#">Franchise</a>
+                
+                <div class="menu-container">
+                    <input type="checkbox" id="menu-toggle">
+                    <label for="menu-toggle" class="hamburger-icon">☰</label>
+                    <div class="dropdown-menu">
+                        <a href="#">Account</a>
+                        <a href="#">Settings</a>
+                        <a href="#">Profile</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1>31 Flavours. Endless Happiness</h1>
+                <p>Discover your favorite scoop, sundae, or cake made to sweeten every celebration.</p>
+                <a href="#" class="order-btn">ORDER NOW</a>
+            </div>
+            <div class="hero-img">
+                <img src="1e0de217f2a3fb6ad5d013c8d3637519.jpg" alt="Ice Cream">
+            </div>
+        </section>
+    </div>
+
+    <h2 class="section-title">Browse By Category</h2>
+    <div class="category-container">
+        <div class="cat-card">
+            <img src="cake.jpg" alt="Cakes">
+            <p><strong>CAKES</strong></p>
+            <div class="price-tag">200/-</div>
+            <button class="buy-btn">BUY NOW</button>
+        </div>
+        <div class="cat-card">
+            <img src="tubs.jpg" alt="Tubs">
+            <p><strong>TUBS</strong></p>
+            <div class="price-tag">215/-</div>
+            <button class="buy-btn">BUY NOW</button>
+        </div>
+        <div class="cat-card">
+            <img src="1c5e070bdfdf253fefe809eb30edf218.jpg" alt="Scoops">
+            <p><strong>SCOOPS</strong></p>
+            <div class="price-tag">200/-</div>
+            <button class="buy-btn">BUY NOW</button>
+        </div>
+        <div class="cat-card">
+            <img src="3e14bb79bc4b214c4c8c077b51ca6c11.jpg" alt="Sundaes">
+            <p><strong>SUNDAES</strong></p>
+            <div class="price-tag">200/-</div>
+            <button class="buy-btn">BUY NOW</button>
+        </div>
+    </div>
+
+    <h2 class="section-title">Special Offers</h2>
+    <div class="offers-section">
+        <div class="offer-card">
+            <h3>GET 10% OFF</h3>
+            <p>ON YOUR FIRST ORDER</p>
+        </div>
+        <div class="offer-card">
+            <h3>ENJOY 15% OFF</h3>
+            <p>ON ORDER ABOVE 600/-</p>
+        </div>
+    </div>
+
+    <footer>
+        <div><strong>OUR SPECIALITY</strong><br>• Pure cow milk used<br>• No additional color</div>
+        <div><strong>LOCATION</strong><br>dharampetth nagar, near milton shop</div>
+        <div><strong>CONTACT INFO</strong><br>PHONE +91 12346653</div>
+        </footer>
+
+</body>
+</html>
